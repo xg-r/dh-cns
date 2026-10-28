@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+/*
+ * 디자인 토큰
+ * - brand  : 로고 네이비(#171c61) 기반 주색
+ * - accent : 로고 블루(#0060b0) 기반 강조색 (활성 탭, 배지, 링크)
+ * - gray   : 웜 그레이. sand(#f6f3f2)는 섹션 배경
+ * - 모서리는 각지게(0) 통일한다. 칩·점 등 원형은 rounded-full 을 쓴다.
+ */
+@theme {
+  --font-sans: var(--font-pretendard), "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+  --color-brand-50: #eef0f9;
+  --color-brand-100: #dde0f2;
+  --color-brand-200: #b9bfe4;
+  --color-brand-300: #8d95cd;
+  --color-brand-400: #5f69b2;
+  --color-brand-500: #3d4896;
+  --color-brand-600: #2b3482;
+  --color-brand-700: #212972;
+  --color-brand-800: #1b2268;
+  --color-brand-900: #171c61;
+  --color-brand-950: #0e1240;
+
+  --color-accent-50: #e8f2fb;
+  --color-accent-100: #cfe3f5;
+  --color-accent-500: #0a6fc0;
+  --color-accent-600: #0060b0;
+  --color-accent-700: #004f92;
+
+  --color-sand: #f6f3f2;
+  --color-charcoal: #1c1b1b;
+
+  --color-gray-50: #faf8f7;
+  --color-gray-100: #f2efed;
+  --color-gray-200: #e4dfdb;
+  --color-gray-300: #d1cac4;
+  --color-gray-400: #a8a19b;
+  --color-gray-500: #7d7772;
+  --color-gray-600: #5e5955;
+  --color-gray-700: #423e3b;
+  --color-gray-800: #2a2726;
+  --color-gray-900: #111111;
+
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+
+  /* 한글 본문 가독성을 위한 행간 */
+  --text-base--line-height: 1.75;
+  --text-lg--line-height: 1.7;
+
+  /* 모션 */
+  --ease-reveal: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --animate-fade-up: fade-up 0.9s var(--ease-reveal) both;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+  --animate-kenburns: kenburns 9s ease-out both;
+  --animate-marquee: marquee 45s linear infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 24px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes kenburns {
+    from {
+      transform: scale(1.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+}
+
+/*
+ * 스크롤 등장 효과: data-reveal 요소의 초기(숨김) 상태. 화면에 들어오면 ScrollReveal 이
+ * Web Animations API 로 최종 상태까지 재생한다. (DOM 속성을 바꾸지 않아 하이드레이션과 충돌하지 않는다)
+ * - 값: (기본) 아래에서 위로 / left / right / zoom / flip(3D) / line(::after 세로선) / dot(타임라인 점)
+ * - 시차: style 의 --reveal-i (lib/reveal.ts 의 revealDelay)
+ * - html.reveal-ready 는 layout 의 인라인 스크립트가 붙인다. JS 가 동작하지 않으면 숨기지 않는다.
+ * - 동작 줄이기 설정 사용자와 인쇄에는 적용하지 않는다. (인쇄 시 아직 스크롤하지 않은 내용이 빠지지 않게)
+ */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal]:not([data-reveal="line"]):not([data-reveal="dot"]) {
+    opacity: 0;
+  }
+
+  .reveal-ready [data-reveal="line"]::after {
+    transform: scaleY(0);
+  }
+
+  .reveal-ready [data-reveal="flip"] {
+    transform-origin: 50% 100%;
+  }
+}
